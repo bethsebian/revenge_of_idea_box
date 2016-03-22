@@ -28,7 +28,7 @@
   <div class="ideas_list">
     <% @ideas.each do |idea| %>
       <h3><%= idea.title %></h3>
-      <%= idea.body %>
+      <%= idea.truncated_body %>
       <br>
       <%= idea.quality %>
       <br>
