@@ -1,28 +1,21 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+For this project, we'll be increasingly thinking about the "server" and "client" as separate entities. We'll be using:
 
-Things you may want to cover:
+* A Rails application to manage data related to our ideas and serve initial UI templates (or just public/index.html)
+* JavaScript (with jQuery) to manage client-side interactions and communicate asynchronously with the server
 
-* Ruby version
+In order to get more experience doing DOM manipulations and AJAX event handling on our own, we will not be using client-side frameworks (Ember, Angular, React, etc.).
 
-* System dependencies
+Your entire application will consist of one HTML page or template. You will not have separate pages for each CRUD action.
 
-* Configuration
+All of your AJAX functionality will be triggered by jQuery.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+The project will address the following specifications:
+* Data model with idea object
+* User can view ideas
+* User can add an idea
+* User can delete an existing idea
+* User can change the quality of an idea
+* User can edit an existing idea
+* User can filter and search ideas
