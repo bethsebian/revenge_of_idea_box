@@ -2,24 +2,34 @@
   <h1>Revenge of Idea Box</h1>
 
   <table>
-    <%= form_for @idea do |f| %>
+    <%= form_tag("/api/v1/ideas", method: "post") do %>
       <tr>
-        <td><%= f.label :title, "Title" %></td>
-        <td><%= f.text_field :title %></td>
+        <td><%= label_tag :title, "Title" %></td>
+        <td><%= text_field_tag :title %></td>
       </tr>
       <tr>
-        <td><%= f.label :body, "Body" %></td>
-        <td><%= f.text_field :body %></td>
+        <td><%= label_tag :body, "Body" %></td>
+        <td><%= text_field_tag :body %></td>
       </tr>
       <tr>
-        <td><%= f.label :quality, "Quality" %></td>
-        <td><%= f.select :quality, ["genius", "plausible", "swill"]%></td>
+        <td><%= label_tag :quality, "Quality" %></td>
+        <td><%= select_tag(:quality, options_for_select(["genius", "plausible", "swill"])) %></td>
       </tr>
       <tr>
         <td>&nbsp</td>
-        <td><%= f.submit "Add Idea" %></td>
+        <td><%= submit_tag "Add Idea" %></td>
       </tr>
     <% end %>
   </table>
 
+  <br>
+  <br>
+
+  <div class="ideas_list">
+    <% @ideas.each do |idea| %>
+      <%= idea.title %>
+      <%= idea.body %>
+      <%= idea.quality %>
+    <% end %>
+  </div>
 </div>
