@@ -27,9 +27,12 @@
 
   <div class="ideas_list">
     <% @ideas.each do |idea| %>
-      <%= idea.title %>
+      <h3><%= idea.title %></h3>
       <%= idea.body %>
+      <br>
       <%= idea.quality %>
+      <br>
+      <br>
     <% end %>
   </div>
 </div>
