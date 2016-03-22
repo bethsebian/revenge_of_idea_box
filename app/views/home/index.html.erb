@@ -1,0 +1,25 @@
+<div class="container">
+  <h1>Revenge of Idea Box</h1>
+
+  <table>
+    <%= form_for @idea do |f| %>
+      <tr>
+        <td><%= f.label :title, "Title" %></td>
+        <td><%= f.text_field :title %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :body, "Body" %></td>
+        <td><%= f.text_field :body %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :quality, "Quality" %></td>
+        <td><%= f.select :quality, ["genius", "plausible", "swill"]%></td>
+      </tr>
+      <tr>
+        <td>&nbsp</td>
+        <td><%= f.submit "Add Idea" %></td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
