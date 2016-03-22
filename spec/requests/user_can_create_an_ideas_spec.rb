@@ -10,7 +10,7 @@ RSpec.describe "UserCanCreateAnIdeas", type: :request do
       fill_in "Title", with: "Idea 1"
       fill_in "Body", with: "Body 1"
 		  select "plausible", from: "Quality"
-      click_button "Add Idea"
+      click_button "Save"
 
       visit root_path
       expect(page).to have_content("Idea 1")
