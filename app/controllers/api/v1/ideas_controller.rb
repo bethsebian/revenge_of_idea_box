@@ -1,8 +1,20 @@
 class Api::V1::IdeasController < ApplicationController
   def create
-    @idea = Idea.create(idea_params)
+    @idea = Idea.new(idea_params)
+    # respond_to do |format|
+    #   if @idea.save
+    #     format.json { render: json: @idea, status: :created, location: @idea }
+    #   else
+    #     format.json { render json: @idea.errors, status: :unprocessable_entity }
+    #   end
+    # end
+  end
+
+  def index
     @ideas = Idea.all
-    render json: @ideas
+    respond_to do |format|
+      format.json { render json: @ideas }
+    end
   end
 
   private

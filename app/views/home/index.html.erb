@@ -2,7 +2,7 @@
   <h1>Revenge of Idea Box</h1>
 
   <table>
-    <%= form_tag("/api/v1/ideas", method: "post") do %>
+    <%= form_tag("/api/v1/ideas", method: "post", remote: true) do %>
       <tr>
         <td><%= label_tag :title, "Title" %></td>
         <td><%= text_field_tag :title %></td>
@@ -26,15 +26,5 @@
   <br>
 
   <div class="ideas_list">
-    <% @ideas.each_with_index do |idea, index| %>
-      <div class="idea_<%= index + 1 %>">
-        <h3><%= idea.title %></h3>
-        <%= idea.truncated_body %>
-        <br>
-        <%= idea.quality %>
-        <br>
-        <br>
-      </div>
-    <% end %>
   </div>
 </div>
