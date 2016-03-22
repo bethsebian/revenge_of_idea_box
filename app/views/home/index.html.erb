@@ -26,13 +26,15 @@
   <br>
 
   <div class="ideas_list">
-    <% @ideas.each do |idea| %>
-      <h3><%= idea.title %></h3>
-      <%= idea.truncated_body %>
-      <br>
-      <%= idea.quality %>
-      <br>
-      <br>
+    <% @ideas.each_with_index do |idea, index| %>
+      <div class="idea_<%= index + 1 %>">
+        <h3><%= idea.title %></h3>
+        <%= idea.truncated_body %>
+        <br>
+        <%= idea.quality %>
+        <br>
+        <br>
+      </div>
     <% end %>
   </div>
 </div>

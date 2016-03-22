@@ -10,13 +10,13 @@ RSpec.describe "UserSeesAllIdeas", type: :request do
       visit root_path
 
       within(".idea_1") do
-        expect(page).to have_content("Title 2")
-        expect(page).to have_content("Body 2")
+        expect(page).to have_content("Title 3")
+        expect(page).to have_content("Body 3")
       end
 
       within(".idea_2") do
-        expect(page).to have_content("Title 2")
-        expect(page).to have_content("Body 2")
+        expect(page).to have_content("Title 1")
+        expect(page).to have_content("Body 1")
       end
 
       within(".idea_3") do
