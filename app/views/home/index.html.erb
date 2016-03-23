@@ -2,24 +2,21 @@
   <h1>Revenge of Idea Box</h1>
 
   <table>
-    <%= form_tag("/api/v1/ideas", method: "post", remote: true) do %>
+
+    <form id="add-new-item">
       <tr>
-        <td><%= label_tag :title, "Title" %></td>
-        <td><%= text_field_tag :title %></td>
+        <td>Title</td>
+        <td><input type="text" name="title" id='title'></td>
       </tr>
       <tr>
-        <td><%= label_tag :body, "Body" %></td>
-        <td><%= text_field_tag :body %></td>
-      </tr>
-      <tr>
-        <td><%= label_tag :quality, "Quality" %></td>
-        <td><%= select_tag(:quality, options_for_select(["genius", "plausible", "swill"])) %></td>
+        <td>Body</td>
+        <td><input type="text" name="body"></td>
       </tr>
       <tr>
         <td>&nbsp</td>
-        <td><%= submit_tag "Save" %></td>
+        <td><input type="submit" value="Save"></td>
       </tr>
-    <% end %>
+    </form>
   </table>
 
   <br>
