@@ -1,21 +1,28 @@
 $(document).ready(function(){
   listAllIdeas();
   deleteIdea();
-
-  $("#add-new-item").submit(function (e) {
-    appendNewIdeaToList();
-  });
-
-  // $.on("click", "#delete-button", function() {
-  //   debugger
-  // });
-
 });
 
+
 function deleteIdea() {
-  $("#ideas-list").delegate("#delete-button", 'click', function() {
-    debugger
-  });
+  $(".ideas-list").delegate("#delete-button", 'click', function() {
+    var idea_id = $(this).closest(".idea").attr('id')
+
+    $.ajax({
+      type: "DELETE",
+      url: "/api/v1/ideas/" + idea_id + ".json",
+      success: function(data) {
+        removeNewItemFromIndex(idea_id);
+      },
+      error: function(xhr) {
+        console.log(xhr.responseText)
+      }
+    })
+  })
+}
+
+function removeNewItemFromIndex(idea_id) {
+  $('#' + idea_id).remove();
 }
 
 function appendNewIdeaToList() {
@@ -39,11 +46,13 @@ function addNewItemToIndex(data) {
 
 function renderIdea(idea) {
   return $(
-    '<div><h2>' +
+    '<div id="' +
+    idea.id +
+    '"><h2>' +
     idea.title +
-    '</h2><p><button type="button" id="delete-button">Delete</button></p><p>' +
+    '</h2><p><button id="delete-button" name="button-delete">Delete</button></p><p>' +
     idea.body +
-    '</p></div><br><br>'
+    '</p><br><br></div>'
   ).addClass('idea');
 }
 

@@ -17,6 +17,12 @@ class Api::V1::IdeasController < ApplicationController
     end
   end
 
+  def destroy
+    idea = Idea.delete(params[:id])
+    respond_to do |format|
+      format.json {render json: idea }
+    end
+  end
   private
 
     def idea_params
