@@ -1,6 +1,11 @@
 $(document).ready(function(){
   listAllIdeas();
   deleteIdea();
+
+  $("#add-new-item").submit(function (e) {
+  appendNewIdeaToList();
+  });
+
 });
 
 
@@ -28,6 +33,7 @@ function removeNewItemFromIndex(idea_id) {
 function appendNewIdeaToList() {
   var data = {}
   $.each($('#add-new-item').serializeArray(), function(i, field) {
+  debugger
     data[field.name] = field.value
   })
 
