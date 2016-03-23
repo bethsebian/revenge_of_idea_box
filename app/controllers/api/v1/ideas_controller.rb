@@ -10,6 +10,13 @@ class Api::V1::IdeasController < ApplicationController
     end
   end
 
+  def show
+    idea = Idea.find(params[:id])
+    respond_to do |format|
+      format.json { render json: idea, status: :created }
+    end
+  end
+
   def index
     @ideas = Idea.all
     respond_to do |format|
@@ -23,6 +30,16 @@ class Api::V1::IdeasController < ApplicationController
       format.json {render json: idea }
     end
   end
+
+  def update
+    idea = Idea.find(params[:id])
+    idea.upvote if params[:change_type] == "upvote"
+    idea.reload
+    respond_to do |format|
+      format.json { render json: idea }
+    end
+  end
+
   private
 
     def idea_params

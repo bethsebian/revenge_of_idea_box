@@ -4,4 +4,10 @@ class Idea < ActiveRecord::Base
   def truncated_body
     body.truncate_words(30)
   end
+
+  def upvote
+    self.quality = "genius" if self.quality == "plausible"
+    self.quality = "plausible" if self.quality == "swill"
+    self.save
+  end
 end

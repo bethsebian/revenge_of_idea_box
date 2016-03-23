@@ -1,11 +1,11 @@
 $(document).ready(function(){
   listAllIdeas();
   deleteIdea();
+  upvoteIdea();
 
   $("#add-new-item").submit(function (e) {
-  appendNewIdeaToList();
+    appendNewIdeaToList();
   });
-
 });
 
 
@@ -16,24 +16,45 @@ function deleteIdea() {
     $.ajax({
       type: "DELETE",
       url: "/api/v1/ideas/" + idea_id + ".json",
-      success: function(data) {
-        removeNewItemFromIndex(idea_id);
-      },
-      error: function(xhr) {
-        console.log(xhr.responseText)
-      }
+      success: function(data) { removeItemFromIndex(idea_id); },
+      error: function(xhr) { console.log(xhr.responseText) }
     })
   })
 }
 
-function removeNewItemFromIndex(idea_id) {
+function removeItemFromIndex(idea_id) {
   $('#' + idea_id).remove();
+}
+
+function upvoteIdea() {
+  $(".ideas-list").delegate("#upvote-button", 'click', function() {
+    var idea_id = $(this).closest(".idea").attr('id')
+    var change_type = { "change_type": "upvote" }
+
+    $.ajax({
+      type: "put",
+      url: "/api/v1/ideas/" + idea_id + ".json",
+      data: change_type,
+      success: function(idea_id) { updateItemInIndex(idea_id); },
+      error: function(xhr) { console.log(xhr.responseText) }
+    })
+  })
+}
+
+function updateItemInIndex(idea_id) {
+  $.ajax({
+    type: "get",
+    dataType: "json",
+    url: "/api/v1/ideas/" + idea_id.id + ".json",
+    success: function(idea) {
+      $('#quality_' + idea.id).text(idea.quality);
+    }
+  });
 }
 
 function appendNewIdeaToList() {
   var data = {}
   $.each($('#add-new-item').serializeArray(), function(i, field) {
-  debugger
     data[field.name] = field.value
   })
 
@@ -52,13 +73,19 @@ function addNewItemToIndex(data) {
 
 function renderIdea(idea) {
   return $(
-    '<div id="' +
-    idea.id +
-    '"><h2>' +
-    idea.title +
-    '</h2><p><button id="delete-button" name="button-delete">Delete</button></p><p>' +
-    idea.body +
-    '</p><br><br></div>'
+    '<div id="'
+    + idea.id
+    + '"><h2>'
+    + idea.title
+    + '</h2><div id="quality_'
+    + idea.id
+    + '">'
+    + idea.quality
+    + '</div><p><button id="delete-button" name="button-delete">Delete</button>'
+    + '<button id="upvote-button" name="button-upvote">UpVote(+)</button>'
+    + '</p><p>'
+    + idea.body
+    + '</p><br><br></div>'
   ).addClass('idea');
 }
 
