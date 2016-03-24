@@ -1,4 +1,6 @@
-function postIdea(data) {
+function postJSON(data) {
+  e.preventDefault();
+
   $.ajax({
     type: 'POST',
     url: '/api/v1/ideas.json',
@@ -29,7 +31,7 @@ function getJSON(url, success_method) {
     type: "get",
     dataType: "json",
     url: url,
-    success: function(idea_id) {
+    success: function(idea) {
       success_method;
     }
   });

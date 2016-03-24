@@ -4,11 +4,11 @@ function renderIdea(idea) {
   return $(
     '<div id="'
     + idea.id
-    + '"><div id="title_'
+    + '"><h2><div id="title_'
     + idea.id
-    + '"><h2>'
+    + '">'
     + idea.title
-    + '</h2></div><div id="quality_'
+    + '</div></h2><div id="quality_'
     + idea.id
     + '">'
     + idea.quality
@@ -16,9 +16,11 @@ function renderIdea(idea) {
     + '<button id="upvote-button" name="button-upvote">UpVote(+)</button>'
     + '<button id="downvote-button" name="button-downvote">DownVote(-)</button>'
     + edit_link
-    + '</p><p>'
+    + '</p><p><div id="body-'
+    + idea.id
+    + '">'
     + idea.body
-    + '</p>'
+    + '</div></p>'
     + '<div id="edit-form"></div><br><br></div>'
   ).addClass('idea');
 }

@@ -1,5 +1,7 @@
 function submitEditDetails() {
   $(".ideas-list").delegate("#edit-idea-details", 'submit', function(e) {
+    e.preventDefault();
+
     var idea_id = setIdeaId(this);
     var data = setData($('#edit-idea-details').serializeArray());
 
@@ -13,14 +15,12 @@ function submitEditDetails() {
   })
 }
 
-function updateFullItemInIndex() {
-  $.ajax({
-    type: "get",
-    dataType: "json",
-    url: "/api/v1/ideas/" + idea_id.id + ".json",
-    success: function(idea) {
-      $('#title' + idea.id).text(idea.title);
-      // $(idea.id).text(renderIdea(idea));
-    }
-  });
+function updateFullItemInIndex(idea) {
+  var url = ideaUrl(idea.id)
+  getJSON(url, updateFullIdea(idea))
+}
+
+function updateFullIdea(idea) {
+  $('#title_' + idea.id).text(idea.title);
+  $('#body-' + idea.id).text(idea.body);
 }
