@@ -63,12 +63,11 @@ function attemptEdit() {
     e.preventDefault();
     var idea_id = $(this).closest(".idea").attr('id');
 
-    $('#57 div#edit-form').append(editForm);
+    $('#' + idea_id + ' div#edit-form').append(editForm);
   });
 }
 
 function editForm() {
-  debugger
   return $(
     '<form id="add-new-item">'
     + 'Title: <input type="text" name="title" id="title">'
