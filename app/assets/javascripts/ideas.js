@@ -5,27 +5,27 @@ $(document).ready(function(){
   downvoteIdea();
   attemptEdit();
   submitEditDetails();
-
-  $("#add-new-item").submit(function (e) {
-    appendNewIdeaToList();
-  });
+  appendNewIdeaToList();
 });
 
 function appendNewIdeaToList() {
-  var data = {}
-  $.each($('#add-new-item').serializeArray(), function(i, field) {
-    data[field.name] = field.value
-  })
+  $(".new-idea").delegate("#add-new-item", 'submit', function() {
 
-  $.ajax({
-      type: 'POST',
-      url: '/api/v1/ideas.json',
-      data: data,
-      success: function(data) {
-        $('.ideas-list').prepend(renderIdea(data));
-      },
-      dataType: 'json'
-  });
+    var data = {}
+    $.each($('#add-new-item').serializeArray(), function(i, field) {
+      data[field.name] = field.value
+    })
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/v1/ideas.json',
+        data: data,
+        success: function(data) {
+          $('.ideas-list').prepend(renderIdea(data));
+        },
+        dataType: 'json'
+    });
+  })
 }
 
 
