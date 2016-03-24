@@ -2,6 +2,7 @@ $(document).ready(function(){
   listAllIdeas();
   deleteIdea();
   upvoteIdea();
+  downvoteIdea();
 
   $("#add-new-item").submit(function (e) {
     appendNewIdeaToList();
@@ -30,6 +31,21 @@ function upvoteIdea() {
   $(".ideas-list").delegate("#upvote-button", 'click', function() {
     var idea_id = $(this).closest(".idea").attr('id')
     var change_type = { "change_type": "upvote" }
+
+    $.ajax({
+      type: "put",
+      url: "/api/v1/ideas/" + idea_id + ".json",
+      data: change_type,
+      success: function(idea_id) { updateItemInIndex(idea_id); },
+      error: function(xhr) { console.log(xhr.responseText) }
+    })
+  })
+}
+
+function downvoteIdea() {
+  $(".ideas-list").delegate("#downvote-button", 'click', function() {
+    var idea_id = $(this).closest(".idea").attr('id')
+    var change_type = { "change_type": "downvote" }
 
     $.ajax({
       type: "put",
@@ -83,6 +99,7 @@ function renderIdea(idea) {
     + idea.quality
     + '</div><p><button id="delete-button" name="button-delete">Delete</button>'
     + '<button id="upvote-button" name="button-upvote">UpVote(+)</button>'
+    + '<button id="downvote-button" name="button-downvote">DownVote(-)</button>'
     + '</p><p>'
     + idea.body
     + '</p><br><br></div>'

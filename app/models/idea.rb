@@ -10,4 +10,11 @@ class Idea < ActiveRecord::Base
     self.quality = "plausible" if self.quality == "swill"
     self.save
   end
+
+  def downvote
+    self.quality = "swill" if self.quality == "plausible"
+    self.quality = "plausible" if self.quality == "genius"
+    self.save
+  end
+
 end

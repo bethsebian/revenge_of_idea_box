@@ -34,6 +34,7 @@ class Api::V1::IdeasController < ApplicationController
   def update
     idea = Idea.find(params[:id])
     idea.upvote if params[:change_type] == "upvote"
+    idea.downvote if params[:change_type] == "downvote"
     idea.reload
     respond_to do |format|
       format.json { render json: idea }
