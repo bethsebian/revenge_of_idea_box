@@ -1,3 +1,15 @@
+function postIdea(data) {
+  $.ajax({
+    type: 'POST',
+    url: '/api/v1/ideas.json',
+    data: data,
+    success: function(data) {
+      $('.ideas-list').prepend(renderIdea(data));
+    },
+    dataType: 'json'
+  });
+}
+
 function putJSON(idea_id, change_type) {
   $.ajax({
     type: "put",
