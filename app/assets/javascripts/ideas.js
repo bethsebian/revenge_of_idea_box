@@ -4,6 +4,7 @@ $(document).ready(function(){
   upvoteIdea();
   downvoteIdea();
   attemptEdit();
+  hideEditForm();
   submitEditDetails();
   appendNewIdeaToList();
 });
