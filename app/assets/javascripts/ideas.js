@@ -3,6 +3,7 @@ $(document).ready(function(){
   deleteIdea();
   upvoteIdea();
   downvoteIdea();
+  attemptEdit();
 
   $("#add-new-item").submit(function (e) {
     appendNewIdeaToList();
@@ -57,6 +58,25 @@ function downvoteIdea() {
   })
 }
 
+function attemptEdit() {
+  $(".ideas-list").delegate("#edit-link", 'click', function(e) {
+    e.preventDefault();
+    var idea_id = $(this).closest(".idea").attr('id');
+
+    $('#57 div#edit-form').append(editForm);
+  });
+}
+
+function editForm() {
+  debugger
+  return $(
+    '<form id="add-new-item">'
+    + 'Title: <input type="text" name="title" id="title">'
+    + 'Body: <input type="text" name="body" id="body">'
+    + '<input type="submit" value="Save"></form>'
+  );
+}
+
 function updateItemInIndex(idea_id) {
   $.ajax({
     type: "get",
@@ -89,31 +109,24 @@ function addNewItemToIndex(data) {
 
 function renderIdea(idea) {
   return $(
-    '<div id="' + idea.id+ '">'
-    + '<h2>' + idea.title + '</h2>'
-    + '<div id="quality_'
-        + idea.id
-      + '">'
+    '<div id="'
+    + idea.id
+    + '"><h2>'
+    + idea.title
+    + '</h2><div id="quality_'
+    + idea.id
+    + '">'
     + idea.quality
     + '</div><p><button id="delete-button" name="button-delete">Delete</button>'
     + '<button id="upvote-button" name="button-upvote">UpVote(+)</button>'
     + '<button id="downvote-button" name="button-downvote">DownVote(-)</button>'
+    + '<a href="#" id="edit-link" name="edit-link">Edit</a>'
     + '</p><p>'
     + idea.body
-    + '</p><br><br></div>'
+    + '</p>'
+    + '<div id="edit-form"></div><br><br></div>'
   ).addClass('idea');
 }
-
-
-<span class="rest-in-place" data-url="/users/1" data-object="user" data-attribute="name" data-placeholder="Enter a name">
-  <%= @user.name %>
-</span>
-if any of these attributes is missing, DOM parents of the element are searched for them. That means you can write something like:
-
-<div data-object="user" data-url="/users/1">
-  Name:  <span class="rest-in-place" data-attribute="name" ><%= @user.name %></span><br/>
-  eMail: <span class="rest-in-place" data-attribute="email"><%= @user.email %></span>
-</div>
 
 
 function collectAndFormatIdeas(ideas, target) {
