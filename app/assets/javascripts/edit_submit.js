@@ -4,6 +4,7 @@ function submitEditDetails() {
 
     var idea_id = setIdeaId(this);
     var data = setData($('#edit-idea-details').serializeArray());
+    this.reset();
 
     $.ajax({
         type: 'put',
