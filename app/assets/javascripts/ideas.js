@@ -8,10 +8,15 @@ $(document).ready(function(){
   appendNewIdeaToList();
 });
 
+function ideaUrl(idea_id) {
+  return "/api/v1/ideas/" + idea_id + ".json";
+}
+
+
+
 function appendNewIdeaToList() {
   $(".new-idea").delegate("#add-new-item", 'submit', function() {
-
-    var data = setData($('#add-new-item').serializeArray())
+    var data = setData($('#add-new-item').serializeArray());
 
     $.ajax({
         type: 'POST',
@@ -31,6 +36,7 @@ function setData(objects_array) {
     data[field.name] = field.value
   })
 }
+
 function listAllIdeas(){
   var target = $('.ideas-list');
   return $.getJSON('api/v1/ideas.json').then(function (ideas) {
@@ -82,46 +88,9 @@ function deleteIdea() {
   })
 }
 
-function upvoteIdea() {
-  $(".ideas-list").delegate("#upvote-button", 'click', function() {
-    var idea_id = $(this).closest(".idea").attr('id')
-    var change_type = { "change_type": "upvote" }
 
-    $.ajax({
-      type: "put",
-      url: "/api/v1/ideas/" + idea_id + ".json",
-      data: change_type,
-      success: function(idea_id) { updateItemInIndex(idea_id); },
-      error: function(xhr) { console.log(xhr.responseText) }
-    })
-  })
-}
 
-function downvoteIdea() {
-  $(".ideas-list").delegate("#downvote-button", 'click', function() {
-    var idea_id = $(this).closest(".idea").attr('id')
-    var change_type = { "change_type": "downvote" }
 
-    $.ajax({
-      type: "put",
-      url: "/api/v1/ideas/" + idea_id + ".json",
-      data: change_type,
-      success: function(idea_id) { updateItemInIndex(idea_id); },
-      error: function(xhr) { console.log(xhr.responseText) }
-    })
-  })
-}
-
-function updateItemInIndex(idea_id) {
-  $.ajax({
-    type: "get",
-    dataType: "json",
-    url: "/api/v1/ideas/" + idea_id.id + ".json",
-    success: function(idea) {
-      $('#quality_' + idea.id).text(idea.quality);
-    }
-  });
-}
 
 function attemptEdit() {
   var x = 0;
@@ -147,12 +116,8 @@ function editForm() {
 
 function submitEditDetails() {
   $(".ideas-list").delegate("#edit-idea-details", 'submit', function(e) {
-
     var idea_id = $(this).closest(".idea").attr('id');
-    var data = {}
-    $.each($('#edit-idea-details').serializeArray(), function(i, field) {
-      data[field.name] = field.value
-    })
+    var data = setData($('#edit-idea-details').serializeArray());
 
     $.ajax({
         type: 'put',
@@ -175,9 +140,3 @@ function updateFullItemInIndex() {
     }
   });
 }
-
-
-
-
-
-
