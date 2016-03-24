@@ -8,12 +8,14 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'rest_in_place'
 
 group :development, :test do
   gem 'byebug'
   gem 'pry'
-  gem 'rspec-rails'
+  gem 'rspec-rails', "~> 3.4.2"
   gem 'capybara'
+  gem 'launchy'
 end
 
 group :development do
