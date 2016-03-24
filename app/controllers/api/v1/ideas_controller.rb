@@ -1,12 +1,8 @@
 class Api::V1::IdeasController < ApplicationController
   def create
-    idea = Idea.new(idea_params)
+    idea = Idea.create(idea_params)
     respond_to do |format|
-      if idea.save
-        format.json { render json: idea, status: :created }
-      else
-        format.json { render json: idea.errors, status: :unprocessable_entity }
-      end
+      format.json { render json: idea, status: :created }
     end
   end
 

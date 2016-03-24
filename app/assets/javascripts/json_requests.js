@@ -1,14 +1,15 @@
 function postJSON(data) {
-  e.preventDefault();
-
   $.ajax({
     type: 'POST',
     url: '/api/v1/ideas.json',
     data: data,
+    dataType: 'json',
     success: function(data) {
       $('.ideas-list').prepend(renderIdea(data));
     },
-    dataType: 'json'
+    error: function(xhr) {
+      console.log(xhr.responseText)
+    }
   });
 }
 
