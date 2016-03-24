@@ -19,14 +19,12 @@ function deleteIdea() {
     $.ajax({
       type: "DELETE",
       url: "/api/v1/ideas/" + idea_id + ".json",
-      success: function(data) { removeItemFromIndex(idea_id); },
+      success: function(data) {
+        $('#' + idea_id).remove();
+      },
       error: function(xhr) { console.log(xhr.responseText) }
     })
   })
-}
-
-function removeItemFromIndex(idea_id) {
-  $('#' + idea_id).remove();
 }
 
 function upvoteIdea() {
@@ -59,12 +57,27 @@ function downvoteIdea() {
   })
 }
 
+function updateItemInIndex(idea_id) {
+  $.ajax({
+    type: "get",
+    dataType: "json",
+    url: "/api/v1/ideas/" + idea_id.id + ".json",
+    success: function(idea) {
+      $('#quality_' + idea.id).text(idea.quality);
+    }
+  });
+}
+
 function attemptEdit() {
+  var x = 0;
   $(".ideas-list").delegate("#edit-link", 'click', function(e) {
     e.preventDefault();
-    var idea_id = $(this).closest(".idea").attr('id');
 
-    $('#' + idea_id + ' div#edit-form').append(editForm);
+    if(x < 1){
+      x++;
+      var idea_id = $(this).closest(".idea").attr('id');
+      $('#' + idea_id + ' div#edit-form').append(editForm);
+    }
   });
 }
 
@@ -104,17 +117,6 @@ function updateFullItemInIndex() {
     success: function(idea) {
       $('#title' + idea.id).text(idea.title);
       // $(idea.id).text(renderIdea(idea));
-    }
-  });
-}
-
-function updateItemInIndex(idea_id) {
-  $.ajax({
-    type: "get",
-    dataType: "json",
-    url: "/api/v1/ideas/" + idea_id.id + ".json",
-    success: function(idea) {
-      $('#quality_' + idea.id).text(idea.quality);
     }
   });
 }
@@ -160,7 +162,6 @@ function renderIdea(idea) {
     + '<div id="edit-form"></div><br><br></div>'
   ).addClass('idea');
 }
-
 
 function collectAndFormatIdeas(ideas, target) {
   var renderedIdeas = ideas.map(renderIdea);
