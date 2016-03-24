@@ -6,8 +6,10 @@ function putJSON(idea_id, change_type) {
     success: function(idea) {
       updateItemInIndex(idea);
     },
-    error: function(xhr) { console.log(xhr.responseText) }
-  })
+    error: function(xhr) {
+      console.log(xhr.responseText)
+    }
+  });
 }
 
 function getJSON(url, success_method) {
@@ -19,4 +21,17 @@ function getJSON(url, success_method) {
       success_method;
     }
   });
+}
+
+function deleteJSON(idea_id, success_method) {
+  $.ajax({
+    type: "DELETE",
+    url: ideaUrl(idea_id),
+    success: function(data) {
+      success_method
+    },
+    error: function(xhr) {
+      console.log(xhr.responseText)
+    }
+  })
 }
