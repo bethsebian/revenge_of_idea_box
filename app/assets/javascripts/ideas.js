@@ -89,13 +89,11 @@ function addNewItemToIndex(data) {
 
 function renderIdea(idea) {
   return $(
-    '<div id="'
-    + idea.id
-    + '"><h2>'
-    + idea.title
-    + '</h2><div id="quality_'
-    + idea.id
-    + '">'
+    '<div id="' + idea.id+ '">'
+    + '<h2>' + idea.title + '</h2>'
+    + '<div id="quality_'
+        + idea.id
+      + '">'
     + idea.quality
     + '</div><p><button id="delete-button" name="button-delete">Delete</button>'
     + '<button id="upvote-button" name="button-upvote">UpVote(+)</button>'
@@ -105,6 +103,18 @@ function renderIdea(idea) {
     + '</p><br><br></div>'
   ).addClass('idea');
 }
+
+
+<span class="rest-in-place" data-url="/users/1" data-object="user" data-attribute="name" data-placeholder="Enter a name">
+  <%= @user.name %>
+</span>
+if any of these attributes is missing, DOM parents of the element are searched for them. That means you can write something like:
+
+<div data-object="user" data-url="/users/1">
+  Name:  <span class="rest-in-place" data-attribute="name" ><%= @user.name %></span><br/>
+  eMail: <span class="rest-in-place" data-attribute="email"><%= @user.email %></span>
+</div>
+
 
 function collectAndFormatIdeas(ideas, target) {
   var renderedIdeas = ideas.map(renderIdea);
