@@ -11,10 +11,7 @@ $(document).ready(function(){
 function appendNewIdeaToList() {
   $(".new-idea").delegate("#add-new-item", 'submit', function() {
 
-    var data = {}
-    $.each($('#add-new-item').serializeArray(), function(i, field) {
-      data[field.name] = field.value
-    })
+    var data = setData($('#add-new-item').serializeArray())
 
     $.ajax({
         type: 'POST',
@@ -28,7 +25,12 @@ function appendNewIdeaToList() {
   })
 }
 
-
+function setData(objects_array) {
+  data = {}
+  return $.each(objects_array, function(i, field) {
+    data[field.name] = field.value
+  })
+}
 function listAllIdeas(){
   var target = $('.ideas-list');
   return $.getJSON('api/v1/ideas.json').then(function (ideas) {
