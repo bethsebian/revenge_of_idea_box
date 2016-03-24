@@ -1,11 +1,11 @@
 class Api::V1::IdeasController < ApplicationController
   def create
-    @idea = Idea.new(idea_params)
+    idea = Idea.new(idea_params)
     respond_to do |format|
-      if @idea.save
-        format.json { render json: @idea, status: :created }
+      if idea.save
+        format.json { render json: idea, status: :created }
       else
-        format.json { render json: @idea.errors, status: :unprocessable_entity }
+        format.json { render json: idea.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -18,9 +18,9 @@ class Api::V1::IdeasController < ApplicationController
   end
 
   def index
-    @ideas = Idea.all
+    ideas = Idea.all
     respond_to do |format|
-      format.json { render json: @ideas }
+      format.json { render json: ideas }
     end
   end
 
@@ -33,10 +33,7 @@ class Api::V1::IdeasController < ApplicationController
 
   def update
     idea = Idea.find(params[:id])
-    idea.update(idea_params)
-    idea.upvote if params[:change_type] == "upvote"
-    idea.downvote if params[:change_type] == "downvote"
-    idea.reload
+    idea.update_changes(idea_params, params[:change_type])
     respond_to do |format|
       format.json { render json: idea }
     end

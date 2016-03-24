@@ -17,4 +17,10 @@ class Idea < ActiveRecord::Base
     self.save
   end
 
+  def update_changes(idea_params, change_type)
+    self.update(idea_params)
+    self.upvote if change_type == "upvote"
+    self.downvote if change_type == "downvote"
+  end
+
 end

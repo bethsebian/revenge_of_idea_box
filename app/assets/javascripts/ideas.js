@@ -103,7 +103,6 @@ function updateFullItemInIndex() {
     url: "/api/v1/ideas/" + idea_id.id + ".json",
     success: function(idea) {
       $('#title' + idea.id).text(idea.title);
-
       // $(idea.id).text(renderIdea(idea));
     }
   });
