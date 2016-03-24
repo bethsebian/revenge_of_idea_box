@@ -79,6 +79,7 @@ function editForm() {
 
 function submitEditDetails() {
   $(".ideas-list").delegate("#edit-idea-details", 'submit', function(e) {
+
     var idea_id = $(this).closest(".idea").attr('id');
     var data = {}
     $.each($('#edit-idea-details').serializeArray(), function(i, field) {
@@ -101,7 +102,9 @@ function updateFullItemInIndex() {
     dataType: "json",
     url: "/api/v1/ideas/" + idea_id.id + ".json",
     success: function(idea) {
-      $(idea.id).text(renderIdea(idea));
+      $('#title' + idea.id).text(idea.title);
+
+      // $(idea.id).text(renderIdea(idea));
     }
   });
 }
@@ -140,9 +143,11 @@ function renderIdea(idea) {
   return $(
     '<div id="'
     + idea.id
+    + '"><div id="title_'
+    + idea.id
     + '"><h2>'
     + idea.title
-    + '</h2><div id="quality_'
+    + '</h2></div><div id="quality_'
     + idea.id
     + '">'
     + idea.quality
