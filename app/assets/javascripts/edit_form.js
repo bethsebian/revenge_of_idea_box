@@ -1,16 +1,8 @@
-var editCount = {
-  counter = 0;
-}
-
 function attemptEdit() {
   $(".ideas-list").delegate("#edit-link", 'click', function(e) {
     e.preventDefault();
-
-    if(editCount.counter < 1){
-      editCount.counter++;
-      var idea_id = $(this).closest(".idea").attr('id');
-      displayEditForm(idea_id);
-    }
+    var idea_id = setIdeaId(this);
+    displayEditForm(idea_id);
   });
 }
 
@@ -27,10 +19,9 @@ function hideEditForm() {
   $(".ideas-list").delegate("#hide-edit-link", 'click', function(e) {
     e.preventDefault();
 
-    var idea_id = $(this).closest(".idea").attr('id');
+    var idea_id = setIdeaId(this);
     $('#edit-idea-details').remove();
     $('#' + idea_id + ' a#hide-edit-link').replaceWith(editLink(idea_id));
-    editFormCount.counter--;
   });
 }
 

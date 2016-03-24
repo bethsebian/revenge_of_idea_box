@@ -1,6 +1,6 @@
 function submitEditDetails() {
   $(".ideas-list").delegate("#edit-idea-details", 'submit', function(e) {
-    var idea_id = $(this).closest(".idea").attr('id');
+    var idea_id = setIdeaId(this);
     var data = setData($('#edit-idea-details').serializeArray());
 
     $.ajax({

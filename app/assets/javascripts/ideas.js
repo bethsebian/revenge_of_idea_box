@@ -19,6 +19,9 @@ function setData(objects_array) {
     data[field.name] = field.value
   })
 }
+function setIdeaId(this_alt) {
+  return $(this_alt).closest(".idea").attr('id');
+}
 
 
 
