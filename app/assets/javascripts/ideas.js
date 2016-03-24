@@ -12,24 +12,6 @@ function ideaUrl(idea_id) {
   return "/api/v1/ideas/" + idea_id + ".json";
 }
 
-
-
-function appendNewIdeaToList() {
-  $(".new-idea").delegate("#add-new-item", 'submit', function() {
-    var data = setData($('#add-new-item').serializeArray());
-
-    $.ajax({
-        type: 'POST',
-        url: '/api/v1/ideas.json',
-        data: data,
-        success: function(data) {
-          $('.ideas-list').prepend(renderIdea(data));
-        },
-        dataType: 'json'
-    });
-  })
-}
-
 function setData(objects_array) {
   data = {}
   return $.each(objects_array, function(i, field) {
@@ -37,106 +19,11 @@ function setData(objects_array) {
   })
 }
 
-function listAllIdeas(){
-  var target = $('.ideas-list');
-  return $.getJSON('api/v1/ideas.json').then(function (ideas) {
-    collectAndFormatIdeas(ideas, target);
-  });
-}
-
-function collectAndFormatIdeas(ideas, target) {
-  var renderedIdeas = ideas.map(renderIdea);
-  $(target).append(renderedIdeas);
-}
-
-function renderIdea(idea) {
-  return $(
-    '<div id="'
-    + idea.id
-    + '"><div id="title_'
-    + idea.id
-    + '"><h2>'
-    + idea.title
-    + '</h2></div><div id="quality_'
-    + idea.id
-    + '">'
-    + idea.quality
-    + '</div><p><button id="delete-button" name="button-delete">Delete</button>'
-    + '<button id="upvote-button" name="button-upvote">UpVote(+)</button>'
-    + '<button id="downvote-button" name="button-downvote">DownVote(-)</button>'
-    + '<a href="#" id="edit-link" name="edit-link">Edit</a>'
-    + '</p><p>'
-    + idea.body
-    + '</p>'
-    + '<div id="edit-form"></div><br><br></div>'
-  ).addClass('idea');
-}
-
-
-function deleteIdea() {
-  $(".ideas-list").delegate("#delete-button", 'click', function() {
-    var idea_id = $(this).closest(".idea").attr('id')
-
-    $.ajax({
-      type: "DELETE",
-      url: "/api/v1/ideas/" + idea_id + ".json",
-      success: function(data) {
-        $('#' + idea_id).remove();
-      },
-      error: function(xhr) { console.log(xhr.responseText) }
-    })
-  })
-}
 
 
 
 
 
-function attemptEdit() {
-  var x = 0;
-  $(".ideas-list").delegate("#edit-link", 'click', function(e) {
-    e.preventDefault();
 
-    if(x < 1){
-      x++;
-      var idea_id = $(this).closest(".idea").attr('id');
-      $('#' + idea_id + ' div#edit-form').append(editForm);
-    }
-  });
-}
 
-function editForm() {
-  return $(
-    '<form id="edit-idea-details">'
-    + 'Title: <input type="text" name="title" id="title">'
-    + 'Body: <input type="text" name="body" id="body">'
-    + '<input type="submit" value="Save"></form>'
-  );
-}
 
-function submitEditDetails() {
-  $(".ideas-list").delegate("#edit-idea-details", 'submit', function(e) {
-    var idea_id = $(this).closest(".idea").attr('id');
-    var data = setData($('#edit-idea-details').serializeArray());
-
-    $.ajax({
-        type: 'put',
-        url: '/api/v1/ideas/' + idea_id + '.json',
-        data: data,
-        success: function(idea_id) { updateFullItemInIndex(idea_id); },
-        error: function(xhr) { console.log(xhr.responseText) }
-    });
-  })
-}
-
-function updateFullItemInIndex() {
-  $.ajax({
-    type: "get",
-    dataType: "json",
-    url: "/api/v1/ideas/" + idea_id.id + ".json",
-    success: function(idea) {
-      $('#title' + idea.id).text(idea.title);
-      // $(idea.id).text(renderIdea(idea));
-    }
-  });
-}
